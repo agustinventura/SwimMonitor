@@ -1,29 +1,171 @@
-* {
-    font-family: Verdana, Lucida Sans, Arial, Helvetica, sans-serif;
-}
-
+/* Colors from Swim theme: https://color.adobe.com/es/Swim-color-theme-506584 
+* dark-blue: #0388A6
+* light-blue: #04C4D9
+* light-turquoise: #04D9D9
+* dark-turquoise: #03A696
+* lighter-turquoise: #BBF2F2
+*/
 body {
-    margin: 0px auto;
-    background-color:#222;
+	font-family: 'Roboto';
+	font-weight: 100;
+	color: #03A696;
 }
 
-.contents {
-	display: flex;
-	display: -webkit-flex;
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	height:320px;
+.clock {
+  position: relative;
+  width: 360px;
+  height: 360px;
+  background-color: #BBF2F2;
+  border-radius: 50%;
+  margin-bottom: 50px;
+  overflow: auto;
 }
 
-.content-padding {
-	margin-top: 16px;
-	margin-bottom: 16px;
-	padding-left: 16px;
-	padding-right: 16px;
+.container {
+  box-sizing: border-box;
+  display: flex;
+  display: -webkit-flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  flex-direction: -webkit-column;
+  align-items: center;
+  align-items: -webkit-center;
+  align-content: center;
+  align-content: -webkit-center;
+  justify-content: center;
+  justificy-content: -webkit-center;
 }
 
-.content_text {
-	font-weight:bold;
-	font-size:5em;
-	color:#fff;
+.btn {
+  box-sizing: border-box;
+  text-align: center;
+  color: #BBF2F2;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  background: none;
+  background-color: #04C4D9;
+  border-radius: 50%;
+  border: 1px solid #009AED;
+  margin: 0;
+}
+
+.btn:hover {
+	background-color: #0388A6;
+}
+
+.btn.--start {
+  min-height: 200px;
+  width: 200px;
+  font-size: 32px;
+}
+
+.btn.--top, .btn.--bottom {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  font-size: 18px;
+  padding: 20px;
+}
+
+.btn.--top {
+	border-top: 0;
+	border-bottom: 1px solid #009AED;
+}
+
+.btn.--bottom {
+  top: auto;
+  bottom: 0;
+  border-top: 1px solid #009AED;
+  border-bottom: 0;
+}
+
+.txt-msg {
+  font-size: 32px;
+}
+
+
+.player {
+  position: relative;
+  font-size: 16px;
+  font-weight: 400;
+  color: #A2A2A4;
+}
+
+.player span {
+  text-transform: uppercase;
+  z-index: 9999;
+  position: relative;
+  background-color: #333;
+  color: #009AED;
+  padding: 2px 10px;
+  font-weight: 600;
+  border-radius: 50%;
+}
+
+.player.--opponent span {
+  color: #AF2755;
+}
+
+.points {
+  font-size: 80px;
+  font-weight: 200;
+  color: #fff;
+  padding: 0 10px;
+}
+
+.sets {
+  display: flex;
+  flex-direction: row;
+}
+
+.set {
+  display: flex;
+  flex-direction: column;
+}
+
+.set-point {
+  font-size: 24px;
+  font-weight: 300;
+  color: #B8BCBF;
+  padding: 3px 6px;
+}
+
+.set.--current .set-point {
+  color: #fff;
+}
+
+.indicator-service {
+  display: inline-block;
+  background-color: #15C256;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-top: 15px;
+  margin-right: 5px;
+}
+
+.indicator-service.--op {
+  margin-top: 50px;
+}
+
+.score {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+
+.help-move {
+  position: absolute;
+  top: 0px;
+  left: -135px;
+  z-index: 0;
+}
+
+.help-move.--bottom {
+  bottom: -5px;
+  left: -105px;
+  top: auto;
 }
