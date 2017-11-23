@@ -108,16 +108,14 @@ ul {
 }
 
 ul li {
-    font-size: 32px;
+    font-size: 28px;
 	color: #BBF2F2;
   background: none;
   background-color: #04C4D9;
-    padding: 10px 0px 10px 130px;
+    padding: 5px 0px 5px 130px;
     border-top: 5px solid #04D9D9;
-}
-
-ul li:last-child {
 	border-bottom: 5px solid #04D9D9;
+	margin: 5px;
 }
 
 ul li:hover {

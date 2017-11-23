@@ -5,6 +5,8 @@ StyleEnum = {
 	MARIPOSA: "Mariposa"
 }
 
+var selectedStyle = null;
+
 function init() {
 	hideNonVisibleDivs();
     setInitialListeners();
@@ -12,12 +14,12 @@ function init() {
 
 function hideNonVisibleDivs() {
 	$("#styleSelector").hide();
-	$("#oldTrainings").hide();
+	$("#previousTrainings").hide();
 }
 
 function setInitialListeners() {
 	$("#showStyles").click(showStyles);
-    $("#showOldTrainings").click(showOldTrainings);
+    $("#showPreviousTrainings").click(showPreviousTrainings);
 	$("#chooseStyle li").click(styleChosen);
     
     /*$("#resume").click(resumeWorkout);
@@ -52,14 +54,17 @@ function showStyles() {
 }
 
 function createStylesList() {
-	var stylesList = $("chooseStyle");
-	stylesList.clear();
-	
+	var stylesList = $("#chooseStyle");
+	stylesList.empty();
+	for (var style in StyleEnum) {
+		stylesList.append($('<li>').text(StyleEnum[style]));
+	}
+	stylesList.attr('size', Object.keys(StyleEnum).length);
 }
 
-function showOldTrainings() {
+function showPreviousTrainings() {
 	$("#initialScreen").hide();
-	$("#showOldTrainings").show();
+	$("#showPreviousTrainings").show();
 }
 
 function styleChosen() {
