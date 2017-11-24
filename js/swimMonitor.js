@@ -11,6 +11,8 @@ LengthEnum = {
 }
 
 var selectedStyle = null;
+var selectedLength = null;
+var lengthCount = 1;
 
 function init() {
 	hideNonVisibleDivs();
@@ -19,6 +21,9 @@ function init() {
 
 function hideNonVisibleDivs() {
 	$("#styleSelector").hide();
+	$("#lengthSelector").hide();
+	$("#trainingReady").hide();
+	$("#currentTraining").hide();
 	$("#previousTrainings").hide();
 }
 
@@ -79,7 +84,7 @@ function showLength() {
     selectedStyle = Object.keys(StyleEnum)[index];
 	$("#styleSelector").hide();
 	createLengthList();
-	setClickListener($(".length"), showTraining());
+	setClickListener($(".length"), showTrainingReady);
 	$("#lengthSelector").show();
 }
 
@@ -92,8 +97,19 @@ function createLengthList() {
 	lengthsList.attr('size', Object.keys(LengthEnum).length);
 }
 
-function showTraining() {
-	
+function showTrainingReady() {
+	var index = $(this).index();
+    selectedLength = Object.keys(LengthEnum)[index];
+	$("#lengthSelector").hide();
+	$("#trainingReady").show();
+	setClickListener($("#startTraining"), showCurrentTraining);
+}
+
+function showCurrentTraining() {
+	$("#trainingReady").hide();
+	$("#currentTraining").show();
+	lengthCount = 1;
+	var style = $("#selectedLength").html();
 }
 
 $(document).ready(init);
