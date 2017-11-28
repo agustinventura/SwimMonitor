@@ -43,12 +43,24 @@
 </div>
 <div id="currentTraining" class="clock">
   <div class="container">
-	<button id="showStyles" class="btn --top">+1 Largo</button>
+	<button id="addLength" class="btn --top">+1 Largo</button>
+	<div class="trainingSumUp">
 	<p id="selectedStyle" class="txt-msg">Estilo: %estilo%</p>
 	<p id="selectedLenght" class="txt-msg">Longitud: %longitud%</p>
-	<p class="txt-title">Largo: %largo%</p>
-	<p class="txt-title">Tiempo: %time%</p>
-	<button id="startTraining" class="btn --bottom">Pausar</button>
+	</div>
+	<div id="trainingData">
+	<p class="txt-data">Largo: <span id="lengthCount">1</span></p>
+	<p class="txt-data">Tiempo: <span id="lengthTime">00m00s</span></p>
+	<p class="txt-data">Total: <span id="totalTime">0h00m00s</span></p>
+	</div>
+	<button id="pauseTraining" class="btn --bottom">Pausar</button>
+  </div>
+</div>
+<div id="pausedTraining" class="clock">
+  <div class="container">
+    <button id="resumeTraining" class="btn --top">Continuar</button>
+    <p class="txt-msg">Entrenamiento pausado</p>
+    <button id="endTraining" class="btn --bottom">Terminar</button>
   </div>
 </div>
 <div id="previousTrainings" class="clock">

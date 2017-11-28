@@ -13,6 +13,10 @@ LengthEnum = {
 var selectedStyle = null;
 var selectedLength = null;
 var lengthCount = 1;
+var totalTimer = null;
+var lengthTimer = null;
+var totalSeconds = null;
+var lengthSeconds = null;
 
 function init() {
 	hideNonVisibleDivs();
@@ -43,10 +47,20 @@ function backPressed(e) {
     if (e.originalEvent.keyName === 'back') {
         if (activePageId === 'initialScreen') {
             exit();
+		} else if (activePageId === 'currentTraining'){
+			reset();
         } else {
             history.back();
         }
     }
+}
+
+function reset() {
+	lengthCount = 1;
+	totalTimer = null;
+	lengthTimer = null;
+	totalSeconds = null;
+	lengthSeconds = null;
 }
 
 function exit() {
@@ -108,8 +122,94 @@ function showTrainingReady() {
 function showCurrentTraining() {
 	$("#trainingReady").hide();
 	$("#currentTraining").show();
-	lengthCount = 1;
-	var style = $("#selectedLength").html();
+	setClickListener($("#addLength"), newLength);
+	setClickListener($("#pauseTraining"), pauseTraining);
+	var style = $("#selectedStyle").html();
+	style = style.replace("%estilo%", StyleEnum[selectedStyle]);
+	$("#selectedStyle").html(style);
+	var poolLength = $("#selectedLenght").html();
+	poolLength = poolLength.replace("%longitud%", selectedLength);
+	$("#selectedLenght").html(poolLength);
+	totalSeconds = 0;
+	totalTimer = setInterval(function () {
+            refreshTotalSeconds();
+        }, 1000);
+	lengthSeconds = 0;
+	lengthTimer = setInterval(function () {
+            refreshLengthSeconds();
+        }, 1000);
+}
+
+function refreshTotalSeconds() {
+	totalSeconds++;
+	$("#totalTime").text(getFormattedTime(totalSeconds));
+}
+
+function getFormattedTime(seconds) {
+	var hours   = Math.floor(seconds / 3600);
+	var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+    var seconds = seconds - (hours * 3600) - (minutes * 60);
+	var time = "";
+	if (hours > 0) {
+		if (hours < 10) {
+			time = time.concat("0" + hours+ "h");
+		} else {
+			time = time.concat(hours+ "h");
+		}
+	}
+	if (minutes < 10) {
+		minutes = "0" + minutes;
+	}
+	time = time.concat(minutes + "m");
+	if (seconds < 10) {
+		seconds = "0" + seconds;
+	}
+	time = time.concat(seconds+"s");
+	return time;
+}
+
+function refreshLengthSeconds() {
+	lengthSeconds++;
+	$("#lengthTime").text(getFormattedTime(lengthSeconds));
+}
+
+function newLength() {
+	lengthCount++;
+	$("#lengthCount").text(lengthCount);
+	clearInterval(lengthTimer);
+	lengthSeconds = 0;
+	$("#lengthTime").text(getFormattedTime(lengthSeconds));
+	lengthTimer = setInterval(function () {
+            refreshLengthSeconds();
+        }, 1000);
+}
+
+function pauseTraining() {
+	clearInterval(lengthTimer);
+	clearInterval(totalTimer);
+	lengthTimer = null;
+	totalTimer = null;
+	$("#currentTraining").hide();
+	$("#pausedTraining").show();
+	setClickListener($("#resumeTraining"), resumeTraining);
+	setClickListener($("#endTraining"), endTraining);
+}
+
+function resumeTraining() {
+	$("#pausedTraining").hide();
+	$("#currentTraining").show();
+	totalTimer = setInterval(function () {
+            refreshTotalSeconds();
+        }, 1000);
+	lengthTimer = setInterval(function () {
+            refreshLengthSeconds();
+        }, 1000);
+}
+
+function endTraining() {
+	reset();
+	$("#pausedTraining").hide();
+	$("#initialScreen").show();
 }
 
 $(document).ready(init);

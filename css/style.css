@@ -102,6 +102,18 @@ body {
   color: #0388A6;
 }
 
+.txt-data {
+	text-transform: uppercase;
+  font-size: 30px;
+  font-weight: 600;
+  color: #0388A6;
+  padding: 5px;
+}
+
+.trainingSumUp {
+	padding-bottom: 20px;
+}
+
 ul {
 	width: 100%;
 	margin-top: 50px;
