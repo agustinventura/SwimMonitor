@@ -124,12 +124,8 @@ function showCurrentTraining() {
 	$("#currentTraining").show();
 	setClickListener($("#addLength"), newLength);
 	setClickListener($("#pauseTraining"), pauseTraining);
-	var style = $("#selectedStyle").html();
-	style = style.replace("%estilo%", StyleEnum[selectedStyle]);
-	$("#selectedStyle").html(style);
-	var poolLength = $("#selectedLenght").html();
-	poolLength = poolLength.replace("%longitud%", selectedLength);
-	$("#selectedLenght").html(poolLength);
+	$("#selectedStyle").html(StyleEnum[selectedStyle]);
+	$("#selectedLength").html(LengthEnum[selectedLength]);
 	totalSeconds = 0;
 	totalTimer = setInterval(function () {
             refreshTotalSeconds();
