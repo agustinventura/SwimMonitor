@@ -44,7 +44,7 @@
 <div id="currentTraining" class="clock">
   <div class="container">
 	<button id="addLength" class="btn --top">+1 Largo</button>
-	<div class="trainingSumUp">
+	<div class="selectedTraining">
 	<p class="txt-msg">Estilo: <span id="selectedStyle"></span></p>
 	<p class="txt-msg">Longitud: <span id="selectedLength"></span></p>
 	</div>
@@ -61,6 +61,34 @@
     <button id="resumeTraining" class="btn --top">Continuar</button>
     <p class="txt-msg">Entrenamiento pausado</p>
     <button id="endTraining" class="btn --bottom">Terminar</button>
+  </div>
+</div>
+<div id="trainingSumUp" class="clock">
+  <div class="container">
+	<table class="sumUpData">
+	<tr>
+	<td>Estilo</td><td id="sumUpStyle"></td>
+	</tr>
+	<tr>
+	<td>Longitud</td><td id="sumUpLength"></td>
+	</tr>
+	<tr>
+	<td>Metros</td><td id="totalMeters"></td>
+	</tr>
+	<tr>
+	<td>Tiempo total</td><td id="sumUpTime"></td>
+	</tr>
+	<tr>
+	<td>Mejor tiempo</td><td id="bestTime"></td>
+	</tr>
+	<tr>
+	<td>Peor tiempo</td><td id="worstTime"></td>
+	</tr>
+	<tr>
+	<td>Tiempo medio</td><td id="averageTime"></td>
+	</tr>
+	</table>
+	<button id="exitTraining" class="btn --bottom">Ok</button>
   </div>
 </div>
 <div id="previousTrainings" class="clock">

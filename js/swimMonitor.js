@@ -17,6 +17,8 @@ var totalTimer = null;
 var lengthTimer = null;
 var totalSeconds = null;
 var lengthSeconds = null;
+var minLengthTime = null;
+var maxLengthTime = null;
 
 function init() {
 	hideNonVisibleDivs();
@@ -28,6 +30,8 @@ function hideNonVisibleDivs() {
 	$("#lengthSelector").hide();
 	$("#trainingReady").hide();
 	$("#currentTraining").hide();
+	$("#pausedTraining").hide();
+	$("#trainingSumUp").hide();
 	$("#previousTrainings").hide();
 }
 
@@ -61,6 +65,8 @@ function reset() {
 	lengthTimer = null;
 	totalSeconds = null;
 	lengthSeconds = null;
+	minLengthTime = null;
+	maxLengthTime = null;
 }
 
 function exit() {
@@ -126,6 +132,7 @@ function showCurrentTraining() {
 	setClickListener($("#pauseTraining"), pauseTraining);
 	$("#selectedStyle").html(StyleEnum[selectedStyle]);
 	$("#selectedLength").html(LengthEnum[selectedLength]);
+	$("#lengthCount").text(lengthCount);
 	totalSeconds = 0;
 	totalTimer = setInterval(function () {
             refreshTotalSeconds();
@@ -134,6 +141,8 @@ function showCurrentTraining() {
 	lengthTimer = setInterval(function () {
             refreshLengthSeconds();
         }, 1000);
+	minLengthTime = Number.MAX_VALUE;
+	maxLengthTime = Number.MIN_VALUE;
 }
 
 function refreshTotalSeconds() {
@@ -172,6 +181,12 @@ function refreshLengthSeconds() {
 function newLength() {
 	lengthCount++;
 	$("#lengthCount").text(lengthCount);
+	if (lengthSeconds < minLengthTime) {
+		minLengthTime = lengthSeconds;
+	}
+	if (lengthSeconds > maxLengthTime) {
+		maxLengthTime = lengthSeconds;
+	}
 	clearInterval(lengthTimer);
 	lengthSeconds = 0;
 	$("#lengthTime").text(getFormattedTime(lengthSeconds));
@@ -203,8 +218,25 @@ function resumeTraining() {
 }
 
 function endTraining() {
-	reset();
+	if (lengthCount === 1) {
+		minLengthTime = lengthSeconds;
+		maxLengthTime = lengthSeconds;
+	}
 	$("#pausedTraining").hide();
+	$("#trainingSumUp").show();
+	$("#sumUpStyle").html(StyleEnum[selectedStyle]);
+	$("#sumUpLength").html(LengthEnum[selectedLength]);
+	$("#sumUpTime").html(getFormattedTime(totalSeconds));
+	$("#totalMeters").html(selectedLength*lengthCount);
+	$("#bestTime").html(getFormattedTime(minLengthTime));
+	$("#worstTime").html(getFormattedTime(maxLengthTime));
+	$("#averageTime").html(getFormattedTime(totalSeconds/lengthCount));
+	setClickListener($("#exitTraining"), exitTraining);
+}
+
+function exitTraining() {
+	reset();
+	$("#trainingSumUp").hide();
 	$("#initialScreen").show();
 }
 

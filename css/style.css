@@ -110,8 +110,16 @@ body {
   padding: 5px;
 }
 
-.trainingSumUp {
+.selectedTraining {
 	padding-bottom: 20px;
+}
+
+.sumUpData  {
+		font-size: 22px;
+}
+
+.sumUpData td {
+	    padding: 0px 10px 10px 0px;
 }
 
 ul {
