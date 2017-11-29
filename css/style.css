@@ -89,6 +89,7 @@ body {
   padding: 20px 0px 10px;
   border-radius: 50%;
   border-bottom: 3px solid #04D9D9;
+  background-color: #BBF2F2;
 }
 
 .txt-msg {
@@ -142,87 +143,13 @@ ul li:hover {
 	background-color: #0388A6;
 }
 
-.player {
-  position: relative;
-  font-size: 16px;
-  font-weight: 400;
-  color: #A2A2A4;
+.trainingItem {
+	padding: 5px 0px 5px 50px;
 }
 
-.player span {
-  text-transform: uppercase;
-  z-index: 9999;
-  position: relative;
-  background-color: #333;
-  color: #009AED;
-  padding: 2px 10px;
-  font-weight: 600;
-  border-radius: 50%;
-}
-
-.player.--opponent span {
-  color: #AF2755;
-}
-
-.points {
-  font-size: 80px;
-  font-weight: 200;
-  color: #fff;
-  padding: 0 10px;
-}
-
-.sets {
-  display: flex;
-  flex-direction: row;
-}
-
-.set {
-  display: flex;
-  flex-direction: column;
-}
-
-.set-point {
-  font-size: 24px;
-  font-weight: 300;
-  color: #B8BCBF;
-  padding: 3px 6px;
-}
-
-.set.--current .set-point {
-  color: #fff;
-}
-
-.indicator-service {
-  display: inline-block;
-  background-color: #15C256;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  margin-top: 15px;
-  margin-right: 5px;
-}
-
-.indicator-service.--op {
-  margin-top: 50px;
-}
-
-.score {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-}
-
-
-.help-move {
-  position: absolute;
-  top: 0px;
-  left: -135px;
-  z-index: 0;
-}
-
-.help-move.--bottom {
-  bottom: -5px;
-  left: -105px;
-  top: auto;
+.scrollableList {
+	    overflow-y: scroll;
+    width: 100%;
+    height: 280px;
+    padding: 40px 0px 80px 0px;
 }
