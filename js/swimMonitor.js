@@ -12,6 +12,7 @@ LengthEnum = {
 
 var totalTimer = null;
 var lengthTimer = null;
+var previousTrainingIndex = null;
 
 function init() {
 	hideNonVisibleDivs();
@@ -117,8 +118,8 @@ function exitPreviousTrainings() {
 }
 
 function showPreviousTraining() {
-	var index = $(this).index();
-	var trainingDate = localStorage.key(index);
+	previousTrainingIndex = $(this).index();
+	var trainingDate = localStorage.key(previousTrainingIndex);
 	var JSONtraining = localStorage.getItem(trainingDate);
 	training = JSON.parse(JSONtraining);
 	$("#previousTrainings").hide();
@@ -132,7 +133,7 @@ function showPreviousTraining() {
 	$("#trainingBestTime").html(getFormattedTime(training.minLengthTime));
 	$("#trainingWorstTime").html(getFormattedTime(training.maxLengthTime));
 	$("#trainingAverageTime").html(getFormattedTime(training.totalSeconds/training.lengthCount));
-	setClickListener($("#exitPreviousTraining"), exitPreviousTraining);
+	setClickListener($("#showPreviousTrainingOptions"), showPreviousTrainingOptions);
 }
 
 function formatDay(date) {
@@ -146,8 +147,24 @@ function formatHour(date) {
 function formatDate(date) {
   return formatDay(date) + ' ' + formatHour(date);
 }
+
+function showPreviousTrainingOptions() {
+	$("#previousTraining").hide();
+	$("#previousTrainingOptions").show();
+	setClickListener($("#deletePreviousTraining"), deletePreviousTraining);
+	setClickListener($("#exitPreviousTraining"), exitPreviousTraining);
+}
+
+function deletePreviousTraining() {
+	var trainingDate = localStorage.key(previousTrainingIndex);
+	localStorage.removeItem(trainingDate);
+	exitPreviousTraining();
+}
+
 function exitPreviousTraining() {
 	training = null;
+	previousTrainingIndex = null;
+	$("#previousTrainingOptions").hide();
 	showPreviousTrainings();
 }
 
