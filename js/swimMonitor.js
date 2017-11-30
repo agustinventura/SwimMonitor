@@ -26,6 +26,7 @@ function hideNonVisibleDivs() {
 	$("#pausedTraining").hide();
 	$("#trainingSumUp").hide();
 	$("#previousTrainings").hide();
+	$("#previousTraining").hide();
 }
 
 function setInitialListeners() {
@@ -118,27 +119,36 @@ function exitPreviousTrainings() {
 function showPreviousTraining() {
 	var index = $(this).index();
 	var trainingDate = localStorage.key(index);
-	training = localStorage.getItem(trainingDate);
+	var JSONtraining = localStorage.getItem(trainingDate);
+	training = JSON.parse(JSONtraining);
 	$("#previousTrainings").hide();
 	$("#previousTraining").show();
-	$("#sumUpDate").html(formatDate(new Date(training.selectedStyle)));
-	$("#sumUpStyle").html(StyleEnum[training.selectedStyle]);
-	$("#sumUpLength").html(LengthEnum[training.selectedLength]);
-	$("#sumUpTime").html(getFormattedTime(training.totalSeconds));
-	$("#totalMeters").html(training.selectedLength*training.lengthCount);
-	$("#bestTime").html(getFormattedTime(training.minLengthTime));
-	$("#worstTime").html(getFormattedTime(training.maxLengthTime));
-	$("#averageTime").html(getFormattedTime(training.totalSeconds/training.lengthCount));
+	$("#trainingDay").html(formatDay(new Date(training.trainingDate)));
+	$("#trainingHour").html(formatHour(new Date(training.trainingDate)));
+	$("#trainingStyle").html(StyleEnum[training.selectedStyle]);
+	$("#trainingLength").html(LengthEnum[training.selectedLength]);
+	$("#trainingTime").html(getFormattedTime(training.totalSeconds));
+	$("#trainingTotalMeters").html(training.selectedLength*training.lengthCount);
+	$("#trainingBestTime").html(getFormattedTime(training.minLengthTime));
+	$("#trainingWorstTime").html(getFormattedTime(training.maxLengthTime));
+	$("#trainingAverageTime").html(getFormattedTime(training.totalSeconds/training.lengthCount));
 	setClickListener($("#exitPreviousTraining"), exitPreviousTraining);
 }
 
-function exitPreviousTraining() {
-	training = null;
-	showPreviousTrainings();
+function formatDay(date) {
+	return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+}
+
+function formatHour(date) {
+	return date.getHours() + ':' + date.getMinutes();
 }
 
 function formatDate(date) {
-  return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+  return formatDay(date) + ' ' + formatHour(date);
+}
+function exitPreviousTraining() {
+	training = null;
+	showPreviousTrainings();
 }
 
 function showLength() {
@@ -260,11 +270,12 @@ function resumeTraining() {
 }
 
 function endTraining() {
-	if (lengthCount === 1) {
-		training.minLengthTime = lengthSeconds;
-		training.maxLengthTime = lengthSeconds;
+	if (training.lengthCount === 1) {
+		training.minLengthTime = training.lengthSeconds;
+		training.maxLengthTime = training.lengthSeconds;
 	}
-	localStorage.setItem(training.trainingDate, training);
+	var jsonTraining = JSON.stringify(training);
+	localStorage.setItem(training.trainingDate, jsonTraining);
 	$("#pausedTraining").hide();
 	$("#trainingSumUp").show();
 	$("#sumUpStyle").html(StyleEnum[training.selectedStyle]);
