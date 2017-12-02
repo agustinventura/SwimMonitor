@@ -33,9 +33,6 @@ function hideNonVisibleDivs() {
 function setInitialListeners() {
 	setClickListener($("#showStyles"), showStyles);
 	setClickListener($("#showPreviousTrainings"), showPreviousTrainings);
-	/*$(document).on('rotarydetent', function(ev) {
-		setsRotaryControl(ev);
-	});*/
     $(window).on('tizenhwkey', function(e) {
     	backPressed(e);
     });
@@ -212,6 +209,8 @@ function showCurrentTraining() {
         }, 1000);
 	training.minLengthTime = Number.MAX_VALUE;
 	training.maxLengthTime = Number.MIN_VALUE;
+	$(document).off('rotarydetent');
+	$(document).on('rotarydetent', newLength);
 }
 
 function refreshTotalSeconds() {
