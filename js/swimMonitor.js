@@ -28,6 +28,7 @@ function hideNonVisibleDivs() {
 	$("#trainingSumUp").hide();
 	$("#previousTrainings").hide();
 	$("#previousTraining").hide();
+	$("#previousTrainingOptions").hide();
 }
 
 function setInitialListeners() {
@@ -41,9 +42,9 @@ function setInitialListeners() {
 function backPressed(e) {
     var activeDivId = $('.clock:visible');
     if (e.originalEvent.keyName === 'back') {
-        if (activePageId === 'initialScreen') {
+        if (activeDivId === 'initialScreen') {
             exit();
-		} else if (activePageId === 'currentTraining'){
+		} else if (activeDivId === 'currentTraining'){
 			reset();
         } else {
             history.back();

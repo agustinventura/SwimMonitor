@@ -1,145 +1,198 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width,user-scalable=no">
-    <title>Monitor de Nataci&oacute;n</title>
-	<link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
-	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="js/tau.min.js"></script>
-    <script src="js/swimMonitor.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="SwimMonitor" />
+<title>Swim Monitor</title>
+<link rel="stylesheet" type="text/css" href="css/reset.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/tau.min.js"></script>
+<script src="js/swimMonitor.js"></script>
 </head>
+
 <body>
-<div id="initialScreen" class="clock">
-  <div class="container">
-    <button id="showStyles" class="btn --top">Nuevo Entreno</button>
-    <p class="txt-msg">&iquest;Qu&eacute; quieres hacer?</p>
-    <button id="showPreviousTrainings" class="btn --bottom">Revisar Entrenos</button>
-  </div>
-</div>
-<div id="styleSelector" class="clock">
-  <div class="container">
-	<div class="title --top">
-		<p class="txt-title">Estilo</p>
+	<div id="initialScreen" class="clock">
+		<div class="container">
+			<button id="showStyles" class="btntop">Nuevo Entreno</button>
+			<div class="txt">
+				<p class="txt-msg">&iquest;Qu&eacute; quieres hacer?</p>
+			</div>
+			<button id="showPreviousTrainings" class="btnbottom">Revisar
+				Entrenos</button>
+		</div>
 	</div>
-	<ul id="chooseStyle">
-	</ul>
-  </div>
-</div>
-<div id="lengthSelector" class="clock">
-  <div class="container">
-	<div class="title --top">
-		<p class="txt-title">Longitud</p>
+	<div id="styleSelector" class="clock">
+		<div class="container">
+			<div class="titletop">
+				<p class="txt-title">Estilo</p>
+			</div>
+			<div class="txt">
+				<ul id="chooseStyle">
+				</ul>
+			</div>
+		</div>
 	</div>
-	<ul id="chooseLength">
-	</ul>
-  </div>
-</div>
-<div id="trainingReady" class="clock">
-  <div class="container">
-	<p class="txt-title">¿Listo?</p>
-	<button id="startTraining" class="btn --bottom">Si</button>
-  </div>
-</div>
-<div id="currentTraining" class="clock">
-  <div class="container">
-	<button id="addLength" class="btn --top">+1 Largo</button>
-	<div class="selectedTraining">
-	<p class="txt-msg">Estilo: <span id="selectedStyle"></span></p>
-	<p class="txt-msg">Longitud: <span id="selectedLength"></span></p>
+	<div id="lengthSelector" class="clock">
+		<div class="container">
+			<div class="titletop">
+				<p class="txt-title">Longitud</p>
+			</div>
+			<div class="txt">
+				<ul id="chooseLength">
+				</ul>
+			</div>
+		</div>
 	</div>
-	<div id="trainingData">
-	<p class="txt-data">Largo: <span id="lengthCount">1</span></p>
-	<p class="txt-data">Tiempo: <span id="lengthTime">00m00s</span></p>
-	<p class="txt-data">Total: <span id="totalTime">0h00m00s</span></p>
+	<div id="trainingReady" class="clock">
+		<div class="container">
+			<div class="txt">
+				<p class="txt-title">¿Listo?</p>
+			</div>
+			<button id="startTraining" class="btnbottom">Si</button>
+		</div>
 	</div>
-	<button id="pauseTraining" class="btn --bottom">Pausar</button>
-  </div>
-</div>
-<div id="pausedTraining" class="clock">
-  <div class="container">
-    <button id="resumeTraining" class="btn --top">Continuar</button>
-    <p class="txt-msg">Entrenamiento pausado</p>
-    <button id="endTraining" class="btn --bottom">Terminar</button>
-  </div>
-</div>
-<div id="trainingSumUp" class="clock">
-  <div class="container">
-	<table class="sumUpData">
-	<tr>
-	<td>Estilo</td><td id="sumUpStyle"></td>
-	</tr>
-	<tr>
-	<td>Longitud</td><td id="sumUpLength"></td>
-	</tr>
-	<tr>
-	<td>Metros</td><td id="totalMeters"></td>
-	</tr>
-	<tr>
-	<td>Tiempo total</td><td id="sumUpTime"></td>
-	</tr>
-	<tr>
-	<td>Mejor tiempo</td><td id="bestTime"></td>
-	</tr>
-	<tr>
-	<td>Peor tiempo</td><td id="worstTime"></td>
-	</tr>
-	<tr>
-	<td>Tiempo medio</td><td id="averageTime"></td>
-	</tr>
-	</table>
-	<button id="exitTraining" class="btn --bottom">Ok</button>
-  </div>
-</div>
-<div id="previousTrainings" class="clock">
-  <div class="container">
-	<div class="title --top">
-		<p class="txt-title">Entrenos</p>
+	<div id="currentTraining" class="clock">
+		<div class="container">
+			<button id="addLength" class="btntop">+1 Largo</button>
+			<div class="txt">
+				<div class="selectedTraining">
+					<p class="txt-msg">
+						Estilo: <span id="selectedStyle"></span>
+					</p>
+					<p class="txt-msg">
+						Longitud: <span id="selectedLength"></span>
+					</p>
+				</div>
+				<div id="trainingData">
+					<p class="txt-data">
+						Largo: <span id="lengthCount">1</span>
+					</p>
+					<p class="txt-data">
+						Tiempo: <span id="lengthTime">00m00s</span>
+					</p>
+					<p class="txt-data">
+						Total: <span id="totalTime">0h00m00s</span>
+					</p>
+				</div>
+			</div>
+			<button id="pauseTraining" class="btnbottom">Pausar</button>
+		</div>
 	</div>
-	<div class="scrollableList">
-	<ul id="trainings">
-	</ul>
+	<div id="pausedTraining" class="clock">
+		<div class="container">
+			<button id="resumeTraining" class="btntop">Continuar</button>
+			<div class="txt">
+				<p class="txt-msg">Entrenamiento pausado</p>
+			</div>
+			<button id="endTraining" class="btnbottom">Terminar</button>
+		</div>
 	</div>
-	<button id="exitPreviousTrainings" class="btn --bottom">Salir</button>
-  </div>
-</div>
-<div id="previousTraining" class="clock">
-  <div class="container">
-	<div class="title --top">
-		<p id="trainingDay" class="txt-title"></p>
-		<p id="trainingHour" class="txt-title"></p>
+	<div id="trainingSumUp" class="clock">
+		<div class="container">
+			<div class="titletop">
+				<p class="txt-title">Resumen</p>
+			</div>
+			<div class="txt">
+				<table class="sumUpData">
+					<tr>
+						<td class="leftCell">Estilo</td>
+						<td class="rightCell" id="sumUpStyle"></td>
+					</tr>
+					<tr>
+						<td class="leftCell">Longitud</td>
+						<td class="rightCell" id="sumUpLength"></td>
+					</tr>
+					<tr>
+						<td class="leftCell">Metros</td>
+						<td class="rightCell" id="totalMeters"></td>
+					</tr>
+					<tr>
+						<td class="leftCell">Tiempo total</td>
+						<td class="rightCell" id="sumUpTime"></td>
+					</tr>
+					<tr>
+						<td class="leftCell">Mejor tiempo</td>
+						<td class="rightCell" id="bestTime"></td>
+					</tr>
+					<tr>
+						<td class="leftCell">Peor tiempo</td>
+						<td class="rightCell" id="worstTime"></td>
+					</tr>
+					<tr>
+						<td class="leftCell">Tiempo medio</td>
+						<td class="rightCell" id="averageTime"></td>
+					</tr>
+				</table>
+			</div>
+			<button id="exitTraining" class="btnbottom">Ok</button>
+		</div>
 	</div>
-	<table class="sumUpData">
-	<tr>
-	<td>Estilo</td><td id="trainingStyle"></td>
-	</tr>
-	<tr>
-	<td>Longitud</td><td id="trainingLength"></td>
-	</tr>
-	<tr>
-	<td>Metros</td><td id="trainingTotalMeters"></td>
-	</tr>
-	<tr>
-	<td>Tiempo total</td><td id="trainingTime"></td>
-	</tr>
-	<tr>
-	<td>Mejor tiempo</td><td id="trainingBestTime"></td>
-	</tr>
-	<tr>
-	<td>Peor tiempo</td><td id="trainingWorstTime"></td>
-	</tr>
-	<tr>
-	<td>Tiempo medio</td><td id="trainingAverageTime"></td>
-	</tr>
-	</table>
-	<button id="showPreviousTrainingOptions" class="btn --bottom">Opciones</button>
-  </div>
-</div>
-<div id="previousTrainingOptions" class="clock">
-  <div class="container">
-    <button id="exitPreviousTraining" class="btn --top">Salir</button>
-    <p class="txt-msg">¿Borrar o salir?</p>
-    <button id="deletePreviousTraining" class="btn --bottom">Borrar</button>
-  </div>
-</div>
+	<div id="previousTrainings" class="clock">
+		<div class="container">
+			<div class="titletop">
+				<p class="txt-title">Entrenos</p>
+			</div>
+			<div class="txt">
+				<div class="scrollableList">
+					<ul id="trainings" class="trainings">
+					</ul>
+				</div>
+			</div>
+			<button id="exitPreviousTrainings" class="btnbottom">Salir</button>
+		</div>
+	</div>
+	<div id="previousTraining" class="clock">
+		<div class="container">
+			<div class="titletop">
+				<p id="trainingDay" class="txt-title-previous-training"></p>
+				<p id="trainingHour" class="txt-title-previous-training"></p>
+			</div>
+			<div class="txt">
+					<table class="previousTrainingData">
+						<tr>
+							<td class="leftCell">Estilo</td>
+							<td class="rightCell" id="trainingStyle"></td>
+						</tr>
+						<tr>
+							<td class="leftCell">Longitud</td>
+							<td class="rightCell" id="trainingLength"></td>
+						</tr>
+						<tr>
+							<td class="leftCell">Metros</td>
+							<td class="rightCell" id="trainingTotalMeters"></td>
+						</tr>
+						<tr>
+							<td class="leftCell">Tiempo total</td>
+							<td class="rightCell" id="trainingTime"></td>
+						</tr>
+						<tr>
+							<td class="leftCell">Mejor tiempo</td>
+							<td class="rightCell" id="trainingBestTime"></td>
+						</tr>
+						<tr>
+							<td class="leftCell">Peor tiempo</td>
+							<td class="rightCell" id="trainingWorstTime"></td>
+						</tr>
+						<tr>
+							<td class="leftCell">Tiempo medio</td>
+							<td class="rightCell" id="trainingAverageTime"></td>
+						</tr>
+					</table>
+			</div>
+			<button id="showPreviousTrainingOptions" class="btnbottom">Opciones</button>
+		</div>
+	</div>
+	<div id="previousTrainingOptions" class="clock">
+		<div class="container">
+			<button id="exitPreviousTraining" class="btntop">Salir</button>
+			<div class="txt">
+				<p class="txt-msg">¿Borrar o salir?</p>
+			</div>
+			<button id="deletePreviousTraining" class="btnbottom">Borrar</button>
+		</div>
+	</div>
 </body>
+</html>
