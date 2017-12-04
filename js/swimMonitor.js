@@ -40,7 +40,7 @@ function setInitialListeners() {
 }
 
 function backPressed(e) {
-    var activeDivId = $('.clock:visible');
+    var activeDivId = $('.clock:visible').not(":hidden").prop("id")
     if (e.originalEvent.keyName === 'back') {
 		goBack(activeDivId);
     }
