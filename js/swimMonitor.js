@@ -42,22 +42,63 @@ function setInitialListeners() {
 function backPressed(e) {
     var activeDivId = $('.clock:visible');
     if (e.originalEvent.keyName === 'back') {
-        if (activeDivId === 'initialScreen') {
-            exit();
-		} else if (activeDivId === 'currentTraining'){
-			reset();
-        } else {
-            history.back();
-        }
+		goBack(activeDivId);
     }
 }
 
-function reset() {
-	training = null;
-	clearInterval(lengthTimer);
-	clearInterval(totalTimer);
-	lengthTimer = null;
-	totalTimer = null;
+function goBack(activeDivId) {
+	switch (activeDivId) {
+		case "initialScreen":
+			exit();
+			break;
+		case "styleSelector":
+			training = null;
+			$("#styleSelector").hide();
+			$("#initialScreen").show();
+			break;
+		case "lengthSelector":
+			training.selectedStyle = null;
+			$("#lengthSelector").hide();
+			$("#styleSelector").show();
+			break;
+		case "trainingReady":
+			training.selectedLength = null;
+			$("#trainingReady").hide();
+			$("#lengthSelector").show();
+			break;
+		case "currentTraining":
+			$("#currentTraining").hide();
+			$("#trainingReady").show();
+			training.trainingDate = null;
+			$("#selectedStyle").html("");
+			$("#selectedLength").html("");
+			$("#lengthCount").text("");
+			training.totalSeconds = 0;
+			clearInterval(totalTimer)
+			totalTimer = null;
+			training.lengthSeconds = 0;
+			clearInterval(lengthTimer);
+			lengthTimer = null;
+			training.minLengthTime = Number.MAX_VALUE;
+			training.maxLengthTime = Number.MIN_VALUE;
+			break;
+		case "pausedTraining":
+			resumeTraining();
+			break;
+		case "trainingSumUp":
+			exitTraining();
+			break;
+		case "previousTrainings":
+			exitPreviousTrainings();
+			break;
+		case "previousTraining":
+			exitPreviousTraining();
+			break;
+		case "previousTrainingOptions":
+			$("#previousTrainingOptions").hide();
+			$("#previousTraining").show();
+			break;
+	}
 }
 
 function exit() {
@@ -88,6 +129,11 @@ function showStyles() {
 function setClickListener(element, listener) {
 	element.off("click");
 	element.click(listener);
+}
+
+function setRotaryListener(listener) {
+	$(document).off('rotarydetent');
+	$(document).on('rotarydetent', listener);
 }
 
 function createStylesList() {
@@ -306,7 +352,7 @@ function endTraining() {
 }
 
 function exitTraining() {
-	reset();
+	training = null;
 	$("#trainingSumUp").hide();
 	$("#initialScreen").show();
 }
