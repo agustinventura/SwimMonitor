@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets" id="http://yourdomain/SwimMonitor" version="1.0.0" viewmodes="maximized">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain/SwimMonitor" version="1.0.0" viewmodes="maximized">
     <tizen:application id="LQMkGZ1puz.SwimMonitor" package="LQMkGZ1puz" required_version="2.3.2"/>
+    <author href="www.digitalsingular.com" email="agustinventura@gmail.com">Agustín Ventura</author>
     <content src="index.html"/>
+    <description xml:lang="es-es">SwimMonitor es tu compañero de natación. Podrás contar los largos que haces girando la corona y el te informará al final del entreno del tiempo total, distancia y mejor y peor tiempo. Además podrás comparar con los entrenos anteriores.</description>
     <feature name="http://tizen.org/feature/screen.size.normal"/>
     <icon src="icon.png"/>
     <name>SwimMonitor</name>
+    <name xml:lang="es-es">SwimMonitor</name>
     <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
     <tizen:profile name="wearable"/>
     <tizen:setting hwkey-event="enable"/>
