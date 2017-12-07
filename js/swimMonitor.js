@@ -37,6 +37,16 @@ function setInitialListeners() {
     $(window).on('tizenhwkey', function(e) {
     	backPressed(e);
     });
+	setRotaryListener(initialScreenNavigation);
+}
+
+function initialScreenNavigation(ev) {
+	var direction = ev.detail.direction;
+    if (direction === "CW") {
+        showStyles();
+    } else {
+        showPreviousTrainings();
+    }
 }
 
 function backPressed(e) {
@@ -273,8 +283,7 @@ function showCurrentTraining() {
         }, 1000);
 	training.minLengthTime = Number.MAX_VALUE;
 	training.maxLengthTime = Number.MIN_VALUE;
-	$(document).off('rotarydetent');
-	$(document).on('rotarydetent', newLength);
+	setRotaryListener(newLength);
 }
 
 function refreshTotalSeconds() {
