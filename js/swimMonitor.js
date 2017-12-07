@@ -13,6 +13,7 @@ LengthEnum = {
 var totalTimer = null;
 var lengthTimer = null;
 var previousTrainingIndex = null;
+var listElement = 0;
 
 function init() {
 	hideNonVisibleDivs();
@@ -158,12 +159,26 @@ function showPreviousTrainings() {
 	$("#initialScreen").hide();
 	$("#previousTrainings").show();
 	var trainingsList = $("#trainings");
+	listElement = 1;
 	trainingsList.empty();
 	for (var i = 0; i < localStorage.length; i++) {
 		trainingsList.append($('<li>').text(formatDate(new Date(localStorage.key(i)))).addClass('trainingItem'));
 	}
 	setClickListener($("#exitPreviousTrainings"), exitPreviousTrainings);
 	setClickListener($(".trainingItem"), showPreviousTraining);
+	listElement++;
+	setClickListener($(".txt-title"), scrollItems);
+}
+
+function scrollItems() {
+	if (listElement <= localStorage.length) {
+		$('.scrollableList').animate(
+			{
+				scrollTop: $('.trainings li:nth-child('+ listElement + ')').position().top - $('.trainings li:first').position().top
+			}, 
+			'slow');
+		listElement++;
+	}
 }
 
 function exitPreviousTrainings() {
@@ -295,6 +310,7 @@ function getFormattedTime(seconds) {
 	var hours   = Math.floor(seconds / 3600);
 	var minutes = Math.floor((seconds - (hours * 3600)) / 60);
     var seconds = seconds - (hours * 3600) - (minutes * 60);
+	seconds = seconds.toFixed(4);
 	var time = "";
 	if (hours > 0) {
 		if (hours < 10) {
