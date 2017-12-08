@@ -35,6 +35,7 @@ function hideNonVisibleDivs() {
 function setInitialListeners() {
 	setClickListener($("#showStyles"), showStyles);
 	setClickListener($("#showPreviousTrainings"), showPreviousTrainings);
+	$(window).off('tizenhwkey');
     $(window).on('tizenhwkey', function(e) {
     	backPressed(e);
     });
@@ -79,6 +80,7 @@ function goBack(activeDivId) {
 			break;
 		case "currentTraining":
 			$("#currentTraining").hide();
+			$(document).off('rotarydetent');
 			$("#trainingReady").show();
 			training.trainingDate = null;
 			$("#selectedStyle").html("");
@@ -131,6 +133,7 @@ function getNewTraining() {
 }
 function showStyles() {
 	training = getNewTraining();
+	$(document).off('rotarydetent');
 	$("#initialScreen").hide();
 	createStylesList();
 	setClickListener($(".style"), showLength);
@@ -166,24 +169,37 @@ function showPreviousTrainings() {
 	}
 	setClickListener($("#exitPreviousTrainings"), exitPreviousTrainings);
 	setClickListener($(".trainingItem"), showPreviousTraining);
-	listElement++;
-	setClickListener($(".txt-title"), scrollItems);
+	setRotaryListener(scrollItems);
 }
 
-function scrollItems() {
-	if (listElement <= localStorage.length) {
-		$('.scrollableList').animate(
-			{
-				scrollTop: $('.trainings li:nth-child('+ listElement + ')').position().top - $('.trainings li:first').position().top
-			}, 
-			'slow');
-		listElement++;
-	}
+function scrollItems(ev) {
+	var direction = ev.detail.direction;
+    if (direction === "CW") {
+		if (listElement < localStorage.length) {
+			$('.scrollableList').animate(
+				{
+					scrollTop: $('.trainings li:nth-child('+ listElement + ')').position().top - $('.trainings li:first').position().top
+				}, 
+				'slow');
+			listElement++;
+		}
+    } else {
+    	if (listElement > 0) {
+    		$('.scrollableList').animate(
+    				{
+    					scrollTop: $('.trainings li:nth-child('+ listElement + ')').position().top - $('.trainings li:first').position().top
+    				}, 
+    				'slow');
+    		if (listElement > 1) {
+    			listElement--;
+    		}
+    	}
+    }
 }
 
 function exitPreviousTrainings() {
-	$("#previousTrainings").hide();
 	$("#initialScreen").show();
+	init();
 }
 
 function showPreviousTraining() {
@@ -191,6 +207,7 @@ function showPreviousTraining() {
 	var trainingDate = localStorage.key(previousTrainingIndex);
 	var JSONtraining = localStorage.getItem(trainingDate);
 	training = JSON.parse(JSONtraining);
+	$(document).off('rotarydetent');
 	$("#previousTrainings").hide();
 	$("#previousTraining").show();
 	$("#trainingDay").html(formatDay(new Date(training.trainingDate)));
@@ -275,6 +292,7 @@ function showTrainingReady() {
 	var index = $(this).index();
     training.selectedLength = Object.keys(LengthEnum)[index];
 	$("#lengthSelector").hide();
+	$(document).off('rotarydetent');
 	$("#trainingReady").show();
 	setClickListener($("#startTraining"), showCurrentTraining);
 }
@@ -287,6 +305,7 @@ function showCurrentTraining() {
 	setClickListener($("#pauseTraining"), pauseTraining);
 	$("#selectedStyle").html(StyleEnum[training.selectedStyle]);
 	$("#selectedLength").html(LengthEnum[training.selectedLength]);
+	training.lengthCount = 1;
 	$("#lengthCount").text(training.lengthCount);
 	training.totalSeconds = 0;
 	totalTimer = setInterval(function () {
@@ -310,7 +329,9 @@ function getFormattedTime(seconds) {
 	var hours   = Math.floor(seconds / 3600);
 	var minutes = Math.floor((seconds - (hours * 3600)) / 60);
     var seconds = seconds - (hours * 3600) - (minutes * 60);
-	seconds = seconds.toFixed(4);
+	if (seconds % 1 != 0) {
+		seconds = seconds.toFixed(2);
+	}
 	var time = "";
 	if (hours > 0) {
 		if (hours < 10) {
@@ -375,6 +396,7 @@ function resumeTraining() {
 }
 
 function endTraining() {
+	$(document).off('rotarydetent');
 	if (training.lengthCount === 1) {
 		training.minLengthTime = training.lengthSeconds;
 		training.maxLengthTime = training.lengthSeconds;
@@ -395,8 +417,8 @@ function endTraining() {
 
 function exitTraining() {
 	training = null;
-	$("#trainingSumUp").hide();
 	$("#initialScreen").show();
+	init();
 }
 
 $(document).ready(init);
